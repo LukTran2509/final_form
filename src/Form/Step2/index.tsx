@@ -13,7 +13,7 @@ const Step2 = () => {
                             style={styles.input}
                         />
                         {meta.touched && meta.error && (
-                            <Text style={{ color: 'red' }}>{meta.error}</Text>
+                            <Text style={styles.error}>{meta.error}</Text>
                         )}
                     </View>
                 )}
@@ -28,7 +28,7 @@ const Step2 = () => {
                             secureTextEntry
                         />
                         {meta.touched && meta.error && (
-                            <Text style={{ color: 'red' }}>{meta.error}</Text>
+                            <Text style={styles.error}>{meta.error}</Text>
                         )}
                     </View>
                 )}
@@ -57,5 +57,6 @@ const styles = StyleSheet.create({
     },
     error: {
         color: 'red',
+        marginTop: 5,
     },
 });

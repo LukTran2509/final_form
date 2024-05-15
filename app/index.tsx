@@ -2,21 +2,16 @@ import React, { useState } from 'react';
 import {
     SafeAreaView,
     Text,
-    TextInput,
-    Button,
     StyleSheet,
     View,
     Image,
     TouchableOpacity,
 } from 'react-native';
-import CheckBox from '@react-native-community/checkbox';
-import { Form, Field, useForm, useFormState } from 'react-final-form';
-import BouncyCheckbox from 'react-native-bouncy-checkbox';
+import { Form } from 'react-final-form';
 import Step1 from '@/src/Form/Step1';
 import Step2 from '@/src/Form/Step2';
 import Step3 from '@/src/Form/Step3';
 import * as yup from 'yup';
-import { Colors } from '@/constants/Colors';
 
 const initialValues = {
     username: '',
@@ -27,13 +22,16 @@ const initialValues = {
 };
 const step2Schema = yup.object().shape({
     username: yup.string().required('Name is required'),
-    password: yup.string().required('required'),
-    checkBox: yup.boolean().notRequired(),
+    password: yup
+        .string()
+        .min(8, 'Password must have a minimum of 8 characters')
+        .required('Password required'),
 });
 
 const step1Schema = yup.object().shape({
     email: yup.string().email('Invalid email').required('Email is required'),
-    phone: yup.string().required('require'),
+    phone: yup.string().required('Phone is require'),
+    checkBox: yup.boolean().oneOf([true], 'CheckBox is required true'),
 });
 
 const HomeScreen = () => {
@@ -44,6 +42,8 @@ const HomeScreen = () => {
     };
     const nextStep = (values: any, form: any) => {
         const errors = validate(values);
+        console.log(errors);
+
         if (Object.keys(errors).length === 0) {
             setStep((prevStep) => prevStep + 1);
         } else {
@@ -72,8 +72,8 @@ const HomeScreen = () => {
                 default:
                     break;
             }
-        } catch (err) {
-            err.inner.forEach((error) => {
+        } catch (err: any) {
+            err.inner.forEach((error: any) => {
                 errors[error.path] = error.message;
             });
         }
@@ -90,7 +90,7 @@ const HomeScreen = () => {
                         {step > 1 && (
                             <TouchableOpacity onPress={handlePrevStep}>
                                 <Image
-                                    source={require('../../assets/images/left-arrow.png')}
+                                    source={require('../assets/images/left-arrow.png')}
                                     style={{
                                         width: 25,
                                         height: 25,

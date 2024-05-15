@@ -16,7 +16,7 @@ const Step1 = () => {
                             style={styles.input}
                         />
                         {meta.touched && meta.error && (
-                            <Text style={{ color: 'red' }}>{meta.error}</Text>
+                            <Text style={styles.error}>{meta.error}</Text>
                         )}
                     </View>
                 )}
@@ -30,30 +30,40 @@ const Step1 = () => {
                             style={styles.input}
                         />
                         {meta.touched && meta.error && (
-                            <Text style={{ color: 'red' }}>{meta.error}</Text>
+                            <Text style={styles.error}>{meta.error}</Text>
                         )}
                     </View>
                 )}
             </Field>
 
-            <View style={styles.checkbox}>
-                <BouncyCheckbox
-                    size={25}
-                    fillColor="#104291"
-                    unFillColor="#FFFFFF"
-                    // text="Checkbox"
-                    iconStyle={{ borderColor: '#104291' }}
-                    innerIconStyle={{ borderWidth: 1 }}
-                    textStyle={{
-                        fontFamily: 'JosefinSans-Regular',
-                    }}
-                    onPress={(isChecked: boolean) => {
-                        form.change('checkBox', isChecked);
-                    }}
-                    isChecked={formState.values.checkBox}
-                />
-                <Text style={{ fontSize: 16 }}>Checkbox</Text>
-            </View>
+            <Field name="checkBox">
+                {({ input, meta }) => (
+                    <View>
+                        <View style={styles.checkbox}>
+                            <BouncyCheckbox
+                                size={25}
+                                fillColor="#104291"
+                                unFillColor="#FFFFFF"
+                                // text="Checkbox"
+                                iconStyle={{ borderColor: '#104291' }}
+                                innerIconStyle={{ borderWidth: 1 }}
+                                textStyle={{
+                                    fontFamily: 'JosefinSans-Regular',
+                                }}
+                                onPress={(isChecked: boolean) => {
+                                    form.change('checkBox', isChecked);
+                                }}
+                                isChecked={input.value}
+                            />
+                            <Text style={{ fontSize: 16 }}>Checkbox</Text>
+                        </View>
+
+                        {meta.touched && meta.error && (
+                            <Text style={styles.error}>{meta.error}</Text>
+                        )}
+                    </View>
+                )}
+            </Field>
         </View>
     );
 };
@@ -78,6 +88,7 @@ const styles = StyleSheet.create({
     },
     error: {
         color: 'red',
+        marginTop: 5,
     },
     checkbox: {
         flexDirection: 'row',
